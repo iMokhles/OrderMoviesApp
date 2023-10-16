@@ -1,0 +1,49 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig.json to read more about this file */
+
+    /* Completeness */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "useUnknownInCatchVariables": false,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react-native",
+    "lib": ["es2022", "dom"],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "target": "esnext",
+    "types": ["jest"],
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["src/App/*"],
+      "@api/*": ["src/API/*"],
+      "@assets/*": ["src/Assets/*"],
+      "@config/*": ["src/Config/*"],
+      "@constants/*": ["src/Constants/*"],
+      "@utils/*": ["src/Utils/*"],
+      "@rredux/*": ["src/Redux/*"],
+      "@modules/*": ["src/Modules/*"],
+      "@components/*": ["src/Components/*"],
+      "@screens/*": ["src/Screens/*"],
+      "@interfaces/*": ["src/Interfaces/*"],
+      "@navigators/*": ["src/Navigators/*"],
+      "@helpers/*": ["src/Helpers/*"],
+      "@themes/*": ["src/Themes/*"]
+    } /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
+  },
+  "typeRoots": ["./src/Interfaces"],
+  "include": ["index.d.ts", "src/**/*"],
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+    ".history",
+    "babel.config.js",
+    "metro.config.js"
+  ]
+}
