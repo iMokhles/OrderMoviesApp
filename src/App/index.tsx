@@ -9,6 +9,9 @@ import {
   getRoute,
   navigationRef,
 } from '@helpers/NavigatorHelper';
+import {Provider} from 'react-redux';
+import {persistor, store} from '@rredux/store';
+import {PersistGate} from 'redux-persist/integration/react';
 
 const App: FC = () => {
   const [routeName, setRouteName] = useState<string | null>(null);
@@ -22,23 +25,27 @@ const App: FC = () => {
   };
 
   return (
-    <TamaguiProvider config={tamaguiConfig}>
-      <NavigationContainer
-        ref={navigationRef}
-        onReady={() => {
-          setRouteName(getActiveRoute()?.name);
-        }}
-        onStateChange={onStateChange}>
-        {/*
-         */}
-        <StatusBar
-          animated={false}
-          barStyle={'dark-content'}
-          backgroundColor={'transparent'}
-        />
-        <Navigators.MainStack />
-      </NavigationContainer>
-    </TamaguiProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <TamaguiProvider config={tamaguiConfig}>
+          <NavigationContainer
+            ref={navigationRef}
+            onReady={() => {
+              setRouteName(getActiveRoute()?.name);
+            }}
+            onStateChange={onStateChange}>
+            {/*
+             */}
+            <StatusBar
+              animated={false}
+              barStyle={'dark-content'}
+              backgroundColor={'transparent'}
+            />
+            <Navigators.MainStack />
+          </NavigationContainer>
+        </TamaguiProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 
