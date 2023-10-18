@@ -1,4 +1,4 @@
-import React, {FC, ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 import {View, ViewStyle, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -13,7 +13,7 @@ interface AppLayoutProps {
   footer?: ReactNode;
 }
 
-const AppLayout: FC = (props: AppLayoutProps) => {
+const AppLayout = (props: AppLayoutProps) => {
   const {children, hasSafeArea, edges, style, header, footer, loading} = props;
   const _renderContent = () => {
     if (hasSafeArea) {
