@@ -96,6 +96,7 @@ const HomeScreen: FC = () => {
         renderItem={({item}: {item: IMovie}) => {
           return (
             <Card
+              borderRadius={0}
               onPress={() => {
                 push(NavRoutes.Details, {item});
               }}
@@ -166,6 +167,7 @@ const styles = StyleSheet.create({
   },
   flatGridContainerStyle: {
     justifyContent: 'center',
+    paddingVertical: getScaleSizeWidth(15),
   },
   flatGridStyle: {
     flex: 1,
