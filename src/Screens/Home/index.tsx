@@ -1,12 +1,17 @@
 import {useGetPopularMoviesQuery} from '@api/TMDB';
 import AppLayout from '@components/AppLayout';
+import {NavRoutes} from '@constants/NavRoutes';
+import {getImageUrl} from '@helpers/AppHelper';
+import {push} from '@helpers/NavigatorHelper';
 import {IMovie} from '@rredux/Reducers/configs/types';
 import {getScaleSizeWidth} from '@utils/ScalingUtils';
 import React, {FC, useEffect, useMemo, useState} from 'react';
 import {Else, If, Then} from 'react-if';
 import {StyleSheet, RefreshControl} from 'react-native';
 import {FlatGrid} from 'react-native-super-grid';
-import {Button, Card, Image, Spinner, Text, View, XStack} from 'tamagui';
+import {Card, Image, Spinner, Text, View} from 'tamagui';
+
+const KEY_EXTRACTOR = (item: IMovie) => String(item.id);
 
 const HomeScreen: FC = () => {
   const [page, setPage] = useState(1);
@@ -79,6 +84,7 @@ const HomeScreen: FC = () => {
         onEndReached={loadMoreMovies}
         onEndReachedThreshold={0.5}
         ListFooterComponent={renderFooter()}
+        keyExtractor={KEY_EXTRACTOR}
         refreshControl={
           <RefreshControl
             refreshing={isFetching}
@@ -90,6 +96,9 @@ const HomeScreen: FC = () => {
         renderItem={({item}: {item: IMovie}) => {
           return (
             <Card
+              onPress={() => {
+                push(NavRoutes.Details, {item});
+              }}
               elevate
               width={getScaleSizeWidth(150) * 0.7}
               height={getScaleSizeWidth(225) * 0.7}>
@@ -113,7 +122,7 @@ const HomeScreen: FC = () => {
                   resizeMode="cover"
                   alignSelf="center"
                   source={{
-                    uri: 'http://image.tmdb.org/t/p/w500' + item?.poster_path,
+                    uri: getImageUrl({path: item?.poster_path}),
                   }}
                 />
               </Card.Background>
@@ -127,7 +136,9 @@ const HomeScreen: FC = () => {
     <AppLayout hasSafeArea edges={['bottom', 'left', 'right']}>
       <If condition={isLoading}>
         <Then>
-          <Spinner size="large" color="$red11" />
+          <View flex={1} justifyContent={'center'} alignItems={'center'}>
+            <Spinner size="large" color="$red11" />
+          </View>
         </Then>
         <Else>
           <If condition={error != null}>

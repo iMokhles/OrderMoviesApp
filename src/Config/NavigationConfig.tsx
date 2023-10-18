@@ -8,4 +8,7 @@ export const appScreensNavOptions: Partial<
   [NavRoutes.Home]: {
     headerTitle: 'Movies',
   },
+  [NavRoutes.Details]: {
+    headerShown: false,
+  },
 };

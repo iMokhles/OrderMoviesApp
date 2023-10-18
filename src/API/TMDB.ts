@@ -23,10 +23,16 @@ export const tmdbAPI = createApi({
         params: {
           api_key: API_KEY,
           page: page,
+          language: 'en',
         },
       }),
+    }),
+    getMovie: builder.query({
+      query: id =>
+        `/movie/${id}?append_to_response=videos,credits&api_key=${API_KEY}`,
     }),
   }),
 });
 
-export const {useGetGenresQuery, useGetPopularMoviesQuery} = tmdbAPI;
+export const {useGetGenresQuery, useGetPopularMoviesQuery, useGetMovieQuery} =
+  tmdbAPI;

@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+
 import {ConfigState} from './types';
 
 const initialState: Partial<ConfigState> = {

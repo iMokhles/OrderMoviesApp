@@ -1,3 +1,4 @@
+import {tmdbAPI} from '@api/TMDB';
 import {configureStore} from '@reduxjs/toolkit';
 import {
   FLUSH,
@@ -8,8 +9,8 @@ import {
   REHYDRATE,
   persistStore,
 } from 'redux-persist';
+
 import {persistedReducer} from './Reducers';
-import {tmdbAPI} from '@api/TMDB';
 
 const defaultMiddlewareOptions = {
   immutableCheck: false,

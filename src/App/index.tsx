@@ -1,17 +1,17 @@
 import tamaguiConfig from '@config/tamagui.config';
-import React, {FC, useEffect, useState} from 'react';
-import {TamaguiProvider} from 'tamagui';
-import {NavigationContainer, NavigationState} from '@react-navigation/native';
-import Navigators from '@navigators/index';
-import {StatusBar} from 'react-native';
 import {
   getActiveRoute,
   getRoute,
   navigationRef,
 } from '@helpers/NavigatorHelper';
-import {Provider} from 'react-redux';
+import Navigators from '@navigators/index';
+import {NavigationContainer, NavigationState} from '@react-navigation/native';
 import {persistor, store} from '@rredux/store';
+import React, {FC, useState} from 'react';
+import {StatusBar} from 'react-native';
+import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
+import {TamaguiProvider} from 'tamagui';
 
 const App: FC = () => {
   const [routeName, setRouteName] = useState<string | null>(null);

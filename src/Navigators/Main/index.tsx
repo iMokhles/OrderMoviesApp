@@ -12,6 +12,7 @@ const MainStack = (): JSX.Element => {
       {/*
        */}
       {CreateScreen(Stack)(NavRoutes.Home, Screens.HomeScreen)}
+      {CreateScreen(Stack)(NavRoutes.Details, Screens.DetailsScreen)}
     </Stack.Navigator>
   );
 };
