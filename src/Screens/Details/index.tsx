@@ -3,6 +3,7 @@ import AppLayout from '@components/AppLayout';
 import BackButton from '@components/BackButton';
 import Poster from '@components/Poster';
 import {getImageUrl} from '@helpers/AppHelper';
+import {useIsFocused} from '@react-navigation/native';
 import {IMovie, IMovieDetails} from '@rredux/Reducers/configs/types';
 import {Star, User} from '@tamagui/lucide-icons';
 import {getScaleSizeWidth} from '@utils/ScalingUtils';
@@ -25,10 +26,12 @@ const DetailsScreen: FC<any> = ({route}: {route: any}) => {
   );
 
   const {width} = useWindowDimensions();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     //
     if (data && !isError) {
+      console.log('data: ', data?.id);
       setMovieDetails(data);
     }
   }, [data, isError]);
@@ -139,16 +142,50 @@ const DetailsScreen: FC<any> = ({route}: {route: any}) => {
 
   const _renderCredits = () => {
     return (
-      <FlatList
-        data={movieDetails?.credits?.cast.slice(0, 10)}
-        renderItem={renderItem}
-        removeClippedSubviews
-        keyExtractor={KEY_EXTRACTOR}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      />
+      <View style={styles.body}>
+        <FlatList
+          data={movieDetails?.credits?.cast.slice(0, 10)}
+          renderItem={renderItem}
+          removeClippedSubviews
+          keyExtractor={KEY_EXTRACTOR}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        />
+        {movieDetails?.recommendations?.results?.length! > 0 && (
+          <Text style={styles.bodyTitle}>Related</Text>
+        )}
+      </View>
     );
   };
+
+  const renderRelatedItem = useCallback(
+    ({item}) => (
+      <View style={styles.relatedContainer}>
+        <Poster
+          posterPath={item?.poster_path}
+          size="w500"
+          width={getScaleSizeWidth(100)}
+        />
+      </View>
+    ),
+    [],
+  );
+
+  const _renderRelatedList = () => {
+    return (
+      <View style={styles.body}>
+        <FlatList
+          data={movieDetails?.recommendations?.results.slice(0, 10)}
+          renderItem={renderRelatedItem}
+          removeClippedSubviews
+          keyExtractor={KEY_EXTRACTOR}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
+    );
+  };
+
   const _renderContent = () => {
     if (!movieDetails) {
       return null;
@@ -159,7 +196,8 @@ const DetailsScreen: FC<any> = ({route}: {route: any}) => {
         {_renderCover()}
         {_renderTopDetails()}
         {_renderBody()}
-        {_renderCredits()}
+        {isFocused && _renderCredits()}
+        {isFocused && _renderRelatedList()}
       </ScrollView>
     );
   };
@@ -237,8 +275,7 @@ const styles = StyleSheet.create({
   profileContainer: {
     flexDirection: 'column',
     alignItems: 'center',
-    width: getScaleSizeWidth(130),
-    paddingHorizontal: getScaleSizeWidth(16),
+    width: getScaleSizeWidth(100),
   },
   profileAvatar: {
     height: getScaleSizeWidth(80),
@@ -262,5 +299,9 @@ const styles = StyleSheet.create({
     marginTop: getScaleSizeWidth(16),
     color: 'black',
     textAlign: 'center',
+  },
+  relatedContainer: {
+    alignItems: 'center',
+    width: getScaleSizeWidth(116),
   },
 });

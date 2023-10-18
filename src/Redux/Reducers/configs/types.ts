@@ -46,6 +46,7 @@ export interface IMovieDetails {
   vote_average: number;
   vote_count: number;
   credits: Credits;
+  recommendations: Recommendations;
 }
 
 export interface BelongsToCollection {
@@ -110,4 +111,11 @@ export interface Crew {
   credit_id: string;
   department: string;
   job: string;
+}
+
+export interface Recommendations {
+  page: number;
+  results: IMovie[];
+  total_pages: number;
+  total_results: number;
 }
